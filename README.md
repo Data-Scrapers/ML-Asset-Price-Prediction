@@ -20,7 +20,7 @@ This project compares the predictive performance of machine learning models agai
 ## 📊 Data Sources
 
 - AlphaVantage API - 1H, 4H, 1D, 1W Stock Data
-- Kaggle - 1H Crypto Data
+- Kaggle - 1H Crypto Data (4H, 1D, 1W Timeframes resampled)
 
 ## 📈 Timeframes
 
