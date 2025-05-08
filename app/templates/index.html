@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Candlestick Chart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+
+<body>
+    <!-- <div class="chart-container">
+        <div id="chart-wrapper"></div>
+        <div class="timeframe-toggle">
+            <button type="button" class="tf-btn active" onclick="window.location.href='/btc/hourly'">1H</button>
+            <button type="button" class="tf-btn" data-frame="4H">4H</button>
+            <button type="button" class="tf-btn" data-frame="1D">1D</button>
+            <button type="button" class="tf-btn" data-frame="1W">1W</button>
+        </div>
+        <div class="asset-toggle">
+            <button type="button" class="asset-btn active" data-asset="BTC">BTC</button>
+            <button type="button" class="asset-btn"       data-asset="ETH">ETH</button>
+            <button type="button" class="asset-btn"       data-asset="AAPL">AAPL</button>
+            <button type="button" class="asset-btn"       data-asset="TSLA">TSLA</button>
+            <button type="button" class="asset-btn"       data-asset="AMZN">AMZN</button>
+          </div>
+    </div> -->
+
+    <div class="main-container">
+        <!-- Left: chart -->
+        <div class="chart-panel">
+            <div id="chart-wrapper"></div>
+            <!-- <div class="timeframe-toggle">
+                <button type="button" class="tf-btn active" data-frame="hourly">1H</button>
+                <button type="button" class="tf-btn" data-frame="4hourly">4H</button>
+                <button type="button" class="tf-btn" data-frame="daily">1D</button>
+                <button type="button" class="tf-btn" data-frame="weekly">1W</button>
+            </div> -->
+
+            <div class="timeframe-toggle">
+                <button type="button" class="tf-btn {% if timeframe=='hourly' %}active{% endif %}"
+                    data-frame="hourly">1H</button>
+
+                <button type="button" class="tf-btn {% if timeframe=='4hourly' %}active{% endif %}"
+                    data-frame="4hourly">4H</button>
+
+                <button type="button" class="tf-btn {% if timeframe=='daily' %}active{% endif %}"
+                    data-frame="daily">1D</button>
+
+                <button type="button" class="tf-btn {% if timeframe=='weekly' %}active{% endif %}"
+                    data-frame="weekly">1W</button>
+            </div>
+        </div>
+
+        <!-- Right: watchlist sidebar -->
+        <div class="sidebar">
+            <h3>Watchlist</h3>
+            <ul class="watchlist">
+                <li>
+                    <button class="asset-btn {% if asset == 'btc' %}active{% endif %}" data-asset="btc">
+                        BTC
+                    </button>
+                </li>
+                <li>
+                    <button class="asset-btn {% if asset == 'eth' %}active{% endif %}" data-asset="eth">
+                        ETH
+                    </button>
+                </li>
+                <li>
+                    <button class="asset-btn {% if asset == 'aapl' %}active{% endif %}" data-asset="aapl">
+                        AAPL
+                    </button>
+                </li>
+                <li>
+                    <button class="asset-btn {% if asset == 'tsla' %}active{% endif %}" data-asset="tsla">
+                        TSLA
+                    </button>
+                </li>
+                <li>
+                    <button class="asset-btn {% if asset == 'amzn' %}active{% endif %}" data-asset="amzn">
+                        AMZN
+                    </button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+    <script>
+        const rawData = {{ data | tojson }};
+        const markers = {{ signals | tojson }}
+        const chart = LightweightCharts.createChart(document.getElementById('chart-wrapper'));
+        const lineSeries = chart.addSeries(LightweightCharts.CandlestickSeries);
+        lineSeries.setData(rawData);
+
+        let currentAsset = document.querySelector('.asset-btn.active').dataset.asset;
+        let currentTimeframe = document.querySelector('.tf-btn.active').dataset.frame;
+
+        function go() {
+            window.location.href = `/${currentAsset}/${currentTimeframe}`;
+        }
+
+        document.querySelectorAll('.asset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // update active styling
+                document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // update variable & navigate
+                currentAsset = btn.dataset.asset;
+                go();
+            });
+        });
+
+        document.querySelectorAll('.tf-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTimeframe = btn.dataset.frame;
+                go();
+            });
+        });
+
+        LightweightCharts.createSeriesMarkers(lineSeries, markers);
+
+    </script>
+</body>
+
+</html>

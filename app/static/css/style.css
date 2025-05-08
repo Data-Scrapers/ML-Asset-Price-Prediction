@@ -1,0 +1,136 @@
+#chart-wrapper {
+  width: 80vw;
+  height: 60vh;
+}
+
+.timeframe-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tf-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.tf-btn.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #0056b3;
+}
+
+
+/* Container for the asset buttons */
+.asset-toggle {
+  display: flex;
+  gap: 0.5rem;
+  /* space between buttons */
+  justify-content: center;
+  /* center the row under the chart */
+  margin-top: 1rem;
+  /* some breathing room above */
+}
+
+/* Base button style */
+.asset-btn {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Hover state */
+.asset-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Active/selected state */
+.asset-btn.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #0056b3;
+}
+
+/* Optional: focus outline for accessibility */
+.asset-btn:focus {
+  outline: 2px solid #80bdff;
+  outline-offset: 2px;
+}
+
+/* Full-height two-column layout */
+.main-container {
+  display: flex;
+  height: 100vh;
+  /* fill the viewport vertically */
+  overflow: hidden;
+}
+
+/* Chart takes 2/3 of width */
+.chart-panel {
+  flex: 2;
+  padding: 1rem;
+}
+
+/* Sidebar takes 1/3 */
+.sidebar {
+  flex: 1;
+  background: #f8f9fa;
+  border-left: 1px solid #ddd;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar header */
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Watchlist list reset */
+.watchlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  /* push buttons to take full height if desired */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Buttons fill width */
+.watchlist .asset-btn {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  text-align: left;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+/* Hover */
+.watchlist .asset-btn:hover {
+  background: #e9ecef;
+}
+
+/* Active state */
+.watchlist .asset-btn.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #0056b3;
+}
